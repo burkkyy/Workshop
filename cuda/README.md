@@ -1,4 +1,4 @@
-Random cuda mini tests
+#Random cuda mini tests
 
 CUDA vector addition
 --------------------
