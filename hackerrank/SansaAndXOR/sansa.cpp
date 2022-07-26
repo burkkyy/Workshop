@@ -13,14 +13,57 @@ vector<string> split(const string &);
  * The function accepts INTEGER_ARRAY arr as parameter.
  */
 
-int sansaXor(vector<int> arr) {
+int get_msb(int n){
+	int msb = 0;
+	while (n != 0){
+		n = n >> 1;
+		msb++;
+	}
+	return msb;
+}
 
+int sansaXor(vector<int> arr) {
+	bitset<32> ans(0);
+    int n = arr.size(), num = n;
+    int* p = new int[n]();
+    p[0] = n;
+
+    for(int i = 1; i < n; i++){
+        num -= 2;
+        p[i] += p[i - 1] + num;
+    }
+
+    int msb_count = 0;
+    for(int i = 0; i < 32; i++){
+        msb_count = 0;
+        for(int j = 0; j < n; j++){
+            bitset<32> b(arr[j]);
+            //cout << "i: "<<i<<" arr[j] "<<arr[j]<<" "<<b<<" b["<<i<<"]: "<< b[i]<< " p " << p[i] << " " << p[j] << " " << b[i] * p[j] <<endl;
+            msb_count += b[i] * p[j];
+        }
+        if(msb_count == 0 || msb_count % 2 == 0){
+            ans[i] = 0;
+        } else {
+            ans[i] = 1;
+        }
+    }
+    //cout << "a: " << ans.to_ulong() << " bin: " << ans<< endl;
+    /* brute force method
+	for(int i = 1; i <= n; i++){
+		for(int j = 0; j < n - i + 1; j++){
+			for(int k = j; k < j + i; k++){
+				ans ^= arr[k];
+			}
+		}
+	}
+    */
+    
+    delete[] p;
+	return (int)ans.to_ulong();
 }
 
 int main()
 {
-    ofstream fout(getenv("OUTPUT_PATH"));
-
     string t_temp;
     getline(cin, t_temp);
 
@@ -46,12 +89,10 @@ int main()
         }
 
         int result = sansaXor(arr);
-
-        fout << result << "\n";
+	
+        cout << result << "\n";
     }
-
-    fout.close();
-
+ 
     return 0;
 }
 
