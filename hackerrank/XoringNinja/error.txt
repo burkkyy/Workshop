@@ -1,0 +1,36 @@
+ninja.cpp: In function 'std::string ltrim(const std::string&)':
+ninja.cpp:91:59: warning: 'std::pointer_to_unary_function<_Arg, _Result> std::ptr_fun(_Result (*)(_Arg)) [with _Arg = int; _Result = int]' is deprecated: use 'std::function' instead [-Wdeprecated-declarations]
+   91 |         find_if(s.begin(), s.end(), not1(ptr_fun<int, int>(isspace)))
+      |                                          ~~~~~~~~~~~~~~~~~^~~~~~~~~
+In file included from /usr/include/c++/12.1.0/string:48,
+                 from /usr/include/c++/12.1.0/bits/locale_classes.h:40,
+                 from /usr/include/c++/12.1.0/bits/ios_base.h:41,
+                 from /usr/include/c++/12.1.0/ios:42,
+                 from /usr/include/c++/12.1.0/istream:38,
+                 from /usr/include/c++/12.1.0/sstream:38,
+                 from /usr/include/c++/12.1.0/complex:45,
+                 from /usr/include/c++/12.1.0/ccomplex:39,
+                 from /usr/include/c++/12.1.0/x86_64-pc-linux-gnu/bits/stdc++.h:54,
+                 from ninja.cpp:1:
+/usr/include/c++/12.1.0/bits/stl_function.h:1126:5: note: declared here
+ 1126 |     ptr_fun(_Result (*__x)(_Arg))
+      |     ^~~~~~~
+ninja.cpp:91:41: warning: 'constexpr std::unary_negate<_Predicate> std::not1(const _Predicate&) [with _Predicate = pointer_to_unary_function<int, int>]' is deprecated: use 'std::not_fn' instead [-Wdeprecated-declarations]
+   91 |         find_if(s.begin(), s.end(), not1(ptr_fun<int, int>(isspace)))
+      |                                     ~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/usr/include/c++/12.1.0/bits/stl_function.h:1046:5: note: declared here
+ 1046 |     not1(const _Predicate& __pred)
+      |     ^~~~
+ninja.cpp: In function 'std::string rtrim(const std::string&)':
+ninja.cpp:101:61: warning: 'std::pointer_to_unary_function<_Arg, _Result> std::ptr_fun(_Result (*)(_Arg)) [with _Arg = int; _Result = int]' is deprecated: use 'std::function' instead [-Wdeprecated-declarations]
+  101 |         find_if(s.rbegin(), s.rend(), not1(ptr_fun<int, int>(isspace))).base(),
+      |                                            ~~~~~~~~~~~~~~~~~^~~~~~~~~
+/usr/include/c++/12.1.0/bits/stl_function.h:1126:5: note: declared here
+ 1126 |     ptr_fun(_Result (*__x)(_Arg))
+      |     ^~~~~~~
+ninja.cpp:101:43: warning: 'constexpr std::unary_negate<_Predicate> std::not1(const _Predicate&) [with _Predicate = pointer_to_unary_function<int, int>]' is deprecated: use 'std::not_fn' instead [-Wdeprecated-declarations]
+  101 |         find_if(s.rbegin(), s.rend(), not1(ptr_fun<int, int>(isspace))).base(),
+      |                                       ~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/usr/include/c++/12.1.0/bits/stl_function.h:1046:5: note: declared here
+ 1046 |     not1(const _Predicate& __pred)
+      |     ^~~~
