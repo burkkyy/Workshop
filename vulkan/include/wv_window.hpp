@@ -5,6 +5,7 @@
 #include <string>
 
 namespace wv {
+
 class WvWindow {
     public:
         WvWindow(int w, int h, std::string name);
@@ -15,6 +16,8 @@ class WvWindow {
         WvWindow &operator=(const WvWindow&) = delete;
 
         bool shouldClose(){ return glfwWindowShouldClose(window); }
+
+        VkExtent2D getExtent(){ return { static_cast<uint32_t>(width), static_cast<uint32_t>(height)}; }
 
         void createWindowSurface(VkInstance instance, VkSurfaceKHR* surface);
     
@@ -27,4 +30,5 @@ class WvWindow {
         std::string windowName;
         GLFWwindow* window;
 };
+
 }

@@ -2,7 +2,6 @@
 
 #include "wv_window.hpp"
 
-// std lib headers
 #include <string>
 #include <vector>
 
@@ -104,4 +103,5 @@ class WvDevice {
   const std::vector<const char *> validationLayers = {"VK_LAYER_KHRONOS_validation"};
   const std::vector<const char *> deviceExtensions = {VK_KHR_SWAPCHAIN_EXTENSION_NAME};
 };
+
 }

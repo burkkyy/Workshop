@@ -3,6 +3,7 @@
 #include <stdexcept>
 
 namespace wv{
+
 WvWindow::WvWindow(int w, int h, std::string name) : width(w), height(h), windowName(name) {
     initWindow();
 }
@@ -25,4 +26,5 @@ void WvWindow::createWindowSurface(VkInstance instance, VkSurfaceKHR* surface){
         throw std::runtime_error("faild to create window surface");
     }
 }
+
 }

@@ -529,4 +529,5 @@ void WvDevice::createImageWithInfo(
     throw std::runtime_error("failed to bind image memory!");
   }
 }
+
 }
