@@ -21,6 +21,10 @@ WvPipeline::~WvPipeline(){
     vkDestroyPipeline(wvDevice.device(), graphics_pipeline, nullptr);
 }
 
+void WvPipeline::bind(VkCommandBuffer command_buffer){
+    vkCmdBindPipeline(command_buffer, VK_PIPELINE_BIND_POINT_GRAPHICS, graphics_pipeline);
+}
+
 std::vector<char> WvPipeline::readFile(const std::string& filepath){
     std::ifstream file(filepath, std::ios::ate | std::ios::binary);
 

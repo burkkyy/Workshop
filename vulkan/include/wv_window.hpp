@@ -13,7 +13,7 @@ class WvWindow {
 
         // To avoid coping this class instance, thereby avoiding hanging pointers
         WvWindow(const WvWindow&) = delete;
-        WvWindow &operator=(const WvWindow&) = delete;
+        WvWindow& operator=(const WvWindow&) = delete;
 
         bool shouldClose(){ return glfwWindowShouldClose(window); }
 
