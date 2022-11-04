@@ -1,12 +1,12 @@
-#include "test_app.hpp"
+#include "app.hpp"
 
 #include <cstdlib>
 #include <iostream>
 #include <stdexcept>
 
 int main(int argc, char** argv){
-    wv::TestApp app{};
-
+    wrk::App app{};
+    
     try{
         app.run();
     } catch(const std::exception& e){

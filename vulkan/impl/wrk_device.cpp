@@ -1,11 +1,11 @@
-#include "wv_device.hpp"
+#include "wrk_device.hpp"
 
 #include <cstring>
 #include <iostream>
 #include <set>
 #include <unordered_set>
 
-namespace wv {
+namespace wrk{
 
 // local callback functions
 static VKAPI_ATTR VkBool32 VKAPI_CALL debugCallback(
@@ -46,7 +46,7 @@ void DestroyDebugUtilsMessengerEXT(
 }
 
 // class member functions
-WvDevice::WvDevice(WvWindow &window) : window{window} {
+WrkDevice::WrkDevice(WrkWindow &window) : window{window} {
   createInstance();
   setupDebugMessenger();
   createSurface();
@@ -55,7 +55,7 @@ WvDevice::WvDevice(WvWindow &window) : window{window} {
   createCommandPool();
 }
 
-WvDevice::~WvDevice() {
+WrkDevice::~WrkDevice() {
   vkDestroyCommandPool(device_, commandPool, nullptr);
   vkDestroyDevice(device_, nullptr);
 
@@ -67,7 +67,7 @@ WvDevice::~WvDevice() {
   vkDestroyInstance(instance, nullptr);
 }
 
-void WvDevice::createInstance() {
+void WrkDevice::createInstance() {
   if (enableValidationLayers && !checkValidationLayerSupport()) {
     throw std::runtime_error("validation layers requested, but not available!");
   }
@@ -107,7 +107,7 @@ void WvDevice::createInstance() {
   hasGflwRequiredInstanceExtensions();
 }
 
-void WvDevice::pickPhysicalDevice() {
+void WrkDevice::pickPhysicalDevice() {
   uint32_t deviceCount = 0;
   vkEnumeratePhysicalDevices(instance, &deviceCount, nullptr);
   if (deviceCount == 0) {
@@ -132,7 +132,7 @@ void WvDevice::pickPhysicalDevice() {
   std::cout << "physical device: " << properties.deviceName << std::endl;
 }
 
-void WvDevice::createLogicalDevice() {
+void WrkDevice::createLogicalDevice() {
   QueueFamilyIndices indices = findQueueFamilies(physicalDevice);
 
   std::vector<VkDeviceQueueCreateInfo> queueCreateInfos;
@@ -178,7 +178,7 @@ void WvDevice::createLogicalDevice() {
   vkGetDeviceQueue(device_, indices.presentFamily, 0, &presentQueue_);
 }
 
-void WvDevice::createCommandPool() {
+void WrkDevice::createCommandPool() {
   QueueFamilyIndices queueFamilyIndices = findPhysicalQueueFamilies();
 
   VkCommandPoolCreateInfo poolInfo = {};
@@ -192,9 +192,9 @@ void WvDevice::createCommandPool() {
   }
 }
 
-void WvDevice::createSurface() { window.createWindowSurface(instance, &surface_); }
+void WrkDevice::createSurface() { window.createWindowSurface(instance, &surface_); }
 
-bool WvDevice::isDeviceSuitable(VkPhysicalDevice device) {
+bool WrkDevice::isDeviceSuitable(VkPhysicalDevice device) {
   QueueFamilyIndices indices = findQueueFamilies(device);
 
   bool extensionsSupported = checkDeviceExtensionSupport(device);
@@ -212,7 +212,7 @@ bool WvDevice::isDeviceSuitable(VkPhysicalDevice device) {
          supportedFeatures.samplerAnisotropy;
 }
 
-void WvDevice::populateDebugMessengerCreateInfo(
+void WrkDevice::populateDebugMessengerCreateInfo(
     VkDebugUtilsMessengerCreateInfoEXT &createInfo) {
   createInfo = {};
   createInfo.sType = VK_STRUCTURE_TYPE_DEBUG_UTILS_MESSENGER_CREATE_INFO_EXT;
@@ -225,7 +225,7 @@ void WvDevice::populateDebugMessengerCreateInfo(
   createInfo.pUserData = nullptr;  // Optional
 }
 
-void WvDevice::setupDebugMessenger() {
+void WrkDevice::setupDebugMessenger() {
   if (!enableValidationLayers) return;
   VkDebugUtilsMessengerCreateInfoEXT createInfo;
   populateDebugMessengerCreateInfo(createInfo);
@@ -234,7 +234,7 @@ void WvDevice::setupDebugMessenger() {
   }
 }
 
-bool WvDevice::checkValidationLayerSupport() {
+bool WrkDevice::checkValidationLayerSupport() {
   uint32_t layerCount;
   vkEnumerateInstanceLayerProperties(&layerCount, nullptr);
 
@@ -259,7 +259,7 @@ bool WvDevice::checkValidationLayerSupport() {
   return true;
 }
 
-std::vector<const char *> WvDevice::getRequiredExtensions() {
+std::vector<const char *> WrkDevice::getRequiredExtensions() {
   uint32_t glfwExtensionCount = 0;
   const char **glfwExtensions;
   glfwExtensions = glfwGetRequiredInstanceExtensions(&glfwExtensionCount);
@@ -273,7 +273,7 @@ std::vector<const char *> WvDevice::getRequiredExtensions() {
   return extensions;
 }
 
-void WvDevice::hasGflwRequiredInstanceExtensions() {
+void WrkDevice::hasGflwRequiredInstanceExtensions() {
   uint32_t extensionCount = 0;
   vkEnumerateInstanceExtensionProperties(nullptr, &extensionCount, nullptr);
   std::vector<VkExtensionProperties> extensions(extensionCount);
@@ -296,7 +296,7 @@ void WvDevice::hasGflwRequiredInstanceExtensions() {
   }
 }
 
-bool WvDevice::checkDeviceExtensionSupport(VkPhysicalDevice device) {
+bool WrkDevice::checkDeviceExtensionSupport(VkPhysicalDevice device) {
   uint32_t extensionCount;
   vkEnumerateDeviceExtensionProperties(device, nullptr, &extensionCount, nullptr);
 
@@ -316,7 +316,7 @@ bool WvDevice::checkDeviceExtensionSupport(VkPhysicalDevice device) {
   return requiredExtensions.empty();
 }
 
-QueueFamilyIndices WvDevice::findQueueFamilies(VkPhysicalDevice device) {
+QueueFamilyIndices WrkDevice::findQueueFamilies(VkPhysicalDevice device) {
   QueueFamilyIndices indices;
 
   uint32_t queueFamilyCount = 0;
@@ -347,7 +347,7 @@ QueueFamilyIndices WvDevice::findQueueFamilies(VkPhysicalDevice device) {
   return indices;
 }
 
-SwapChainSupportDetails WvDevice::querySwapChainSupport(VkPhysicalDevice device) {
+SwapChainSupportDetails WrkDevice::querySwapChainSupport(VkPhysicalDevice device) {
   SwapChainSupportDetails details;
   vkGetPhysicalDeviceSurfaceCapabilitiesKHR(device, surface_, &details.capabilities);
 
@@ -373,7 +373,7 @@ SwapChainSupportDetails WvDevice::querySwapChainSupport(VkPhysicalDevice device)
   return details;
 }
 
-VkFormat WvDevice::findSupportedFormat(
+VkFormat WrkDevice::findSupportedFormat(
     const std::vector<VkFormat> &candidates, VkImageTiling tiling, VkFormatFeatureFlags features) {
   for (VkFormat format : candidates) {
     VkFormatProperties props;
@@ -389,7 +389,7 @@ VkFormat WvDevice::findSupportedFormat(
   throw std::runtime_error("failed to find supported format!");
 }
 
-uint32_t WvDevice::findMemoryType(uint32_t typeFilter, VkMemoryPropertyFlags properties) {
+uint32_t WrkDevice::findMemoryType(uint32_t typeFilter, VkMemoryPropertyFlags properties) {
   VkPhysicalDeviceMemoryProperties memProperties;
   vkGetPhysicalDeviceMemoryProperties(physicalDevice, &memProperties);
   for (uint32_t i = 0; i < memProperties.memoryTypeCount; i++) {
@@ -402,7 +402,7 @@ uint32_t WvDevice::findMemoryType(uint32_t typeFilter, VkMemoryPropertyFlags pro
   throw std::runtime_error("failed to find suitable memory type!");
 }
 
-void WvDevice::createBuffer(
+void WrkDevice::createBuffer(
     VkDeviceSize size,
     VkBufferUsageFlags usage,
     VkMemoryPropertyFlags properties,
@@ -433,7 +433,7 @@ void WvDevice::createBuffer(
   vkBindBufferMemory(device_, buffer, bufferMemory, 0);
 }
 
-VkCommandBuffer WvDevice::beginSingleTimeCommands() {
+VkCommandBuffer WrkDevice::beginSingleTimeCommands() {
   VkCommandBufferAllocateInfo allocInfo{};
   allocInfo.sType = VK_STRUCTURE_TYPE_COMMAND_BUFFER_ALLOCATE_INFO;
   allocInfo.level = VK_COMMAND_BUFFER_LEVEL_PRIMARY;
@@ -451,7 +451,7 @@ VkCommandBuffer WvDevice::beginSingleTimeCommands() {
   return commandBuffer;
 }
 
-void WvDevice::endSingleTimeCommands(VkCommandBuffer commandBuffer) {
+void WrkDevice::endSingleTimeCommands(VkCommandBuffer commandBuffer) {
   vkEndCommandBuffer(commandBuffer);
 
   VkSubmitInfo submitInfo{};
@@ -465,7 +465,7 @@ void WvDevice::endSingleTimeCommands(VkCommandBuffer commandBuffer) {
   vkFreeCommandBuffers(device_, commandPool, 1, &commandBuffer);
 }
 
-void WvDevice::copyBuffer(VkBuffer srcBuffer, VkBuffer dstBuffer, VkDeviceSize size) {
+void WrkDevice::copyBuffer(VkBuffer srcBuffer, VkBuffer dstBuffer, VkDeviceSize size) {
   VkCommandBuffer commandBuffer = beginSingleTimeCommands();
 
   VkBufferCopy copyRegion{};
@@ -477,7 +477,7 @@ void WvDevice::copyBuffer(VkBuffer srcBuffer, VkBuffer dstBuffer, VkDeviceSize s
   endSingleTimeCommands(commandBuffer);
 }
 
-void WvDevice::copyBufferToImage(
+void WrkDevice::copyBufferToImage(
     VkBuffer buffer, VkImage image, uint32_t width, uint32_t height, uint32_t layerCount) {
   VkCommandBuffer commandBuffer = beginSingleTimeCommands();
 
@@ -504,7 +504,7 @@ void WvDevice::copyBufferToImage(
   endSingleTimeCommands(commandBuffer);
 }
 
-void WvDevice::createImageWithInfo(
+void WrkDevice::createImageWithInfo(
     const VkImageCreateInfo &imageInfo,
     VkMemoryPropertyFlags properties,
     VkImage &image,

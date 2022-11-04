@@ -1,42 +1,46 @@
 #pragma once
 
-#include "wv_device.hpp"
+#include "wrk_device.hpp"
 
 #include <string>
 #include <vector>
 
-namespace wv{
+namespace wrk{
 
 struct PipelineConfigInfo {
-    VkViewport viewport;
-    VkRect2D scissor;
+    PipelineConfigInfo(const PipelineConfigInfo&) = delete;
+    PipelineConfigInfo& operator=(const PipelineConfigInfo&) = delete;
+    
+    VkPipelineViewportStateCreateInfo viewportInfo;
     VkPipelineInputAssemblyStateCreateInfo inputAssemblyInfo;
     VkPipelineRasterizationStateCreateInfo rasterizationInfo;
     VkPipelineMultisampleStateCreateInfo multisampleInfo;
     VkPipelineColorBlendAttachmentState colorBlendAttachment;
     VkPipelineColorBlendStateCreateInfo colorBlendInfo;
     VkPipelineDepthStencilStateCreateInfo depthStencilInfo;
+    std::vector<VkDynamicState> dynamicStateEnables;
+    VkPipelineDynamicStateCreateInfo dynamicStateInfo;
     VkPipelineLayout pipelineLayout = nullptr;
     VkRenderPass renderPass = nullptr;
     uint32_t subpass = 0;
 };
 
-class WvPipeline{
+class WrkPipeline{
     public:
-        WvPipeline(
-            WvDevice& device, 
+        WrkPipeline(
+            WrkDevice& device, 
             const std::string& vert_filepath, 
             const std::string& frag_filepath,
             const PipelineConfigInfo& config_info);
         
-        ~WvPipeline();
+        ~WrkPipeline();
 
-        WvPipeline(const WvPipeline&) = delete;
-        void operator=(const WvPipeline&) = delete;
+        WrkPipeline(const WrkPipeline&) = delete;
+        WrkPipeline& operator=(const WrkPipeline&) = delete;
 
-        void bind(VkCommandBuffer command_buffer);
+        void bind(VkCommandBuffer commandBuffer);
 
-        static PipelineConfigInfo defaultPipelineConfigInfo(uint32_t width, uint32_t height);
+        static void defaultPipelineConfigInfo(PipelineConfigInfo& configInfo);
 
     private:
         static std::vector<char> readFile(const std::string& filepath);
@@ -48,7 +52,7 @@ class WvPipeline{
 
         void createShaderModule(const std::vector<char>& code, VkShaderModule* shader_mod);
 
-        WvDevice& wvDevice;
+        WrkDevice& wrkDevice;
         VkPipeline graphics_pipeline;
         VkShaderModule vert_shader_mod;
         VkShaderModule frag_shader_mod;

@@ -1,23 +1,25 @@
 #pragma once
 
-#include "wv_device.hpp"
+#include "wrk_device.hpp"
 
 #include <vulkan/vulkan.h>
 
+#include <memory>
 #include <string>
 #include <vector>
 
-namespace wv {
+namespace wrk{
 
-class WvSwapChain {
+class WrkSwapChain {
  public:
   static constexpr int MAX_FRAMES_IN_FLIGHT = 2;
 
-  WvSwapChain(WvDevice &deviceRef, VkExtent2D windowExtent);
-  ~WvSwapChain();
+  WrkSwapChain(WrkDevice &deviceRef, VkExtent2D windowExtent);
+  WrkSwapChain(WrkDevice &deviceRef, VkExtent2D windowExtent, std::shared_ptr<WrkSwapChain> previous);
+  ~WrkSwapChain();
 
-  WvSwapChain(const WvSwapChain &) = delete;
-  void operator=(const WvSwapChain &) = delete;
+  WrkSwapChain(const WrkSwapChain &) = delete;
+  WrkSwapChain& operator=(const WrkSwapChain &) = delete;
 
   VkFramebuffer getFrameBuffer(int index) { return swapChainFramebuffers[index]; }
   VkRenderPass getRenderPass() { return renderPass; }
@@ -37,6 +39,7 @@ class WvSwapChain {
   VkResult submitCommandBuffers(const VkCommandBuffer *buffers, uint32_t *imageIndex);
 
  private:
+  void init();
   void createSwapChain();
   void createImageViews();
   void createDepthResources();
@@ -63,10 +66,11 @@ class WvSwapChain {
   std::vector<VkImage> swapChainImages;
   std::vector<VkImageView> swapChainImageViews;
 
-  WvDevice &device;
+  WrkDevice &device;
   VkExtent2D windowExtent;
 
   VkSwapchainKHR swapChain;
+  std::shared_ptr<WrkSwapChain> oldSwapchain;
 
   std::vector<VkSemaphore> imageAvailableSemaphores;
   std::vector<VkSemaphore> renderFinishedSemaphores;

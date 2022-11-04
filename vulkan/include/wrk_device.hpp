@@ -1,11 +1,11 @@
 #pragma once
 
-#include "wv_window.hpp"
+#include "wrk_window.hpp"
 
 #include <string>
 #include <vector>
 
-namespace wv {
+namespace wrk{
 
 struct SwapChainSupportDetails {
   VkSurfaceCapabilitiesKHR capabilities;
@@ -21,7 +21,7 @@ struct QueueFamilyIndices {
   bool isComplete() { return graphicsFamilyHasValue && presentFamilyHasValue; }
 };
 
-class WvDevice {
+class WrkDevice {
  public:
 #ifdef NDEBUG
   const bool enableValidationLayers = false;
@@ -29,14 +29,14 @@ class WvDevice {
   const bool enableValidationLayers = true;
 #endif
 
-  WvDevice(WvWindow &window);
-  ~WvDevice();
+  WrkDevice(WrkWindow &window);
+  ~WrkDevice();
 
   // Not copyable or movable
-  WvDevice(const WvDevice &) = delete;
-  void operator=(const WvDevice &) = delete;
-  WvDevice(WvDevice &&) = delete;
-  WvDevice &operator=(WvDevice &&) = delete;
+  WrkDevice(const WrkDevice&) = delete;
+  WrkDevice& operator=(const WrkDevice &) = delete;
+  WrkDevice(WrkDevice &&) = delete;
+  WrkDevice& operator=(WrkDevice&&) = delete;
 
   VkCommandPool getCommandPool() { return commandPool; }
   VkDevice device() { return device_; }
@@ -92,7 +92,7 @@ class WvDevice {
   VkInstance instance;
   VkDebugUtilsMessengerEXT debugMessenger;
   VkPhysicalDevice physicalDevice = VK_NULL_HANDLE;
-  WvWindow &window;
+  WrkWindow &window;
   VkCommandPool commandPool;
 
   VkDevice device_;
