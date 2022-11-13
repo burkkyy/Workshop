@@ -1,10 +1,9 @@
 #pragma once
 
 #include "wrk_device.hpp"
-#include "wrk_pipeline.hpp"
-#include "wrk_swapchain.hpp"
 #include "wrk_window.hpp"
-#include "wrk_model.hpp"
+#include "wrk_game_object.hpp"
+#include "wrk_renderer.hpp"
 
 #include <memory>
 #include <vector>
@@ -26,23 +25,16 @@ class App{
         void run();
     
     private:
-        void sierpinski(std::vector<WrkModel::Vertex>& vertices, int depth, glm::vec2 left, glm::vec2 right, glm::vec2 top);
-        void loadModels();
-        void createPipelineLayout();
-        void createPipeline();
-        void createCommandBuffers();
-        void freeCommandBuffers();
-        void drawFrame();
-        void recreateSwapChain();
-        void recordCommandBuffer(int image_index);
+        void loadGameObjects();
 
         WrkWindow wrkWindow{WIDTH, HEIGHT, NAME};
         WrkDevice wrkDevice{wrkWindow};
-        std::unique_ptr<WrkSwapChain> wrkSwapChain;
-        std::unique_ptr<WrkPipeline> wrkPipeline;
-        VkPipelineLayout pipelineLayout;
-        std::vector<VkCommandBuffer> commandBuffers;
-        std::unique_ptr<WrkModel> wrkModel;
+        WrkRenderer wrkRenderer{wrkWindow, wrkDevice};
+
+        std::vector<WrkGameObject> gameObjects;
+
+        // random non vital helper and fun functions
+        float get_rand(){ return static_cast <float> (rand()) / static_cast <float> (RAND_MAX); }
 };
 
 }

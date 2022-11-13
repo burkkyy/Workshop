@@ -5,6 +5,8 @@
 #include <stdexcept>
 
 int main(int argc, char** argv){
+    srand(static_cast<unsigned>(time(0)));
+
     wrk::App app{};
     
     try{
