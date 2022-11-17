@@ -19,6 +19,7 @@ class WrkRenderer{
         WrkRenderer& operator=(const WrkRenderer&) = delete;
 
         VkRenderPass getSwapChainRenderPass() const { return wrkSwapChain->getRenderPass(); }
+        float getAspectRatio() const { return wrkSwapChain->extentAspectRatio(); }
         bool isFrameInProgress() const { return isFrameStarted; }
         
         VkCommandBuffer getCurrentCommandBuffer() const {

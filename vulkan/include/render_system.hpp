@@ -1,5 +1,6 @@
 #pragma once
 
+#include "wrk_camera.hpp"
 #include "wrk_device.hpp"
 #include "wrk_pipeline.hpp"
 #include "wrk_game_object.hpp"
@@ -17,7 +18,7 @@ class RendererSystem{
         RendererSystem(const RendererSystem&) = delete;
         RendererSystem& operator=(const RendererSystem&) = delete;
     
-        void renderGameObjects(VkCommandBuffer commandBuffer, std::vector<WrkGameObject>& gameObjects);
+        void renderGameObjects(VkCommandBuffer commandBuffer, std::vector<WrkGameObject>& gameObjects, const WrkCamera& camera);
 
     private:
         void createPipelineLayout();

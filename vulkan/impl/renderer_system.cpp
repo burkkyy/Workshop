@@ -12,8 +12,7 @@
 namespace wrk{
 
 struct SimplePushConstantData {
-    glm::mat2 transfrom{1.0f};
-    glm::vec2 offset;
+    glm::mat4 transform{1.0f};
     alignas(16) glm::vec3 color;  
 };
 
@@ -58,19 +57,19 @@ void RendererSystem::createPipeline(VkRenderPass renderPass){
         pipelineConfig);
 }
 
-void RendererSystem::renderGameObjects(VkCommandBuffer commandBuffer, std::vector<WrkGameObject>& gameObjects){
-    int i = 0;
-    for(auto& obj : gameObjects){
-        i++;
-        obj.transfrom2d.rotation = glm::mod(obj.transfrom2d.rotation + 0.001f * i, 2.0f * glm::two_pi<float>());
-    }
-
+void RendererSystem::renderGameObjects(VkCommandBuffer commandBuffer, std::vector<WrkGameObject>& gameObjects, const WrkCamera& camera){
     wrkPipeline->bind(commandBuffer);
+
+    auto projectionView = camera.getProjection() * camera.getView();
+
     for(auto& obj : gameObjects){
+        obj.transform.rotation.y = glm::mod(obj.transform.rotation.y + 0.01f, glm::two_pi<float>());
+        obj.transform.rotation.x = glm::mod(obj.transform.rotation.x + 0.005f, glm::two_pi<float>());
+        // obj.transform.rotation.z = glm::mod(obj.transform.rotation.z + 0.01f, glm::two_pi<float>());
+    
         SimplePushConstantData push{};
-        push.offset = obj.transfrom2d.translation;
         push.color = obj.color;
-        push.transfrom = obj.transfrom2d.mat2();
+        push.transform = projectionView * obj.transform.mat4();
 
         vkCmdPushConstants(
             commandBuffer,
