@@ -173,7 +173,7 @@ void WrkSwapChain::createSwapChain() {
 
   createInfo.oldSwapchain = oldSwapchain == nullptr ? VK_NULL_HANDLE : oldSwapchain->swapChain;
 
-  if (vkCreateSwapchainKHR(device.device(), &createInfo, nullptr, &swapChain) != VK_SUCCESS) {
+  if (vkCreateSwapchainKHR(device.device(), &createInfo, nullptr, &swapchain) != VK_SUCCESS) {
     throw std::runtime_error("failed to create swap chain!");
   }
 
