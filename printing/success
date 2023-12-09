@@ -1,0 +1,17 @@
+#!/bin/bash
+
+# @file success
+# @author Caleb Burke
+# @version 1.0
+# @date June 7, 2023
+#
+# Script to print out success
+
+# Get string from argv, otherwise from stdin
+[ $# -ne 0 ] && msg=$1 || msg=$(cat -)
+
+# Print, with color
+echo -e "\e[1;32m[+]\e[0m $msg"
+
+# Exit with code 0, aka success
+exit 0

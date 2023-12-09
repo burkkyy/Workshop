@@ -1,0 +1,17 @@
+#!/bin/bash
+
+# @file info
+# @author Caleb Burke
+# @version 1.1
+# @date June 7, 2023
+#
+# Script to print out info from other build scripts.
+
+# Get info string from argv, otherwise from stdin
+[ $# -ne 0 ] && info=$1 || info=$(cat -)
+
+# Print out the info, with color
+echo -e "\e[1;34m[-]\e[0m $info"
+
+# Exit with code 0, aka success
+exit 0

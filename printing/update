@@ -1,0 +1,17 @@
+#!/bin/bash
+
+# @file update
+# @author Caleb Burke
+# @version 1.0
+# @date June 7, 2023
+#
+# Script to print out update info from other build scripts.
+
+# Get update string from argv, otherwise from stdin
+[ $# -ne 0 ] && update=$1 || update=$(cat -)
+
+# Print out the update, with color
+echo -e "\e[0;32m[*]\e[0m $update"
+
+# Exit with code 0, aka success
+exit 0
