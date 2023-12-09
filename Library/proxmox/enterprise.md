@@ -9,9 +9,9 @@ Edit files `/etc/apt/sources.list.d/pve-enterprise.list` and `/etc/apt/sources.l
 # deb https://enterprise.proxmox.com/debian/pve bookworm pve-enterprise
 ```
 
-``text
+```text
 # deb https://enterprise.proxmox.com/debian/ceph-quincy bookworm enterprise
-``
+```
 
 ### Use the no-subscription repository.
 Edit file `vim /etc/apt/sources.list`
