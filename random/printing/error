@@ -1,0 +1,59 @@
+#!/bin/bash
+
+# @file error
+# @author Caleb Burke
+# @version 1.0
+# @date June 7, 2023
+#
+# Script to print out errors from other build scripts.
+#
+# Please keep in mind I only wrote this script to work for just npm errors and 
+# errors from other scripts in this directory.
+
+# Get error string from argv, otherwise from stdin
+[ $# -ne 0 ] && error=$1 || error=$(cat -)
+
+# This function will print out the error with color
+_p () { echo -e "\e[0;31m[!]\e[0m $1"; }
+
+# Run the error string through a switch statment to print out the corret error
+case $error in
+    "test")
+        _p "There is no testing made for build scripts."
+        $(dirname "$0")/info "Run 'npm run' for all build commands."
+    ;;
+
+    "start")
+        _p "There is no entry point. This is only for running build scripts."
+        $(dirname "$0")/info "Run 'npm run' for all build commands."
+    ;;
+
+    "built")
+        _p "Already built!"
+    ;;
+
+    "notfound")
+        _p "File not found!"
+    ;;
+
+    "path")
+        _p "Do not manually run this script! See README for details"
+    ;;
+
+    "sudo")
+        _p "You have to enter you sudo password!"
+    ;;
+
+    "update")
+        _p "Update was unsuccessful."
+        $(dirname "$0")/info "See error.log for details."
+    ;;
+
+    *)
+        _p "Some error has occurred!"
+        $(dirname "$0")/info "Run 'npm run' for all build commands."
+    ;;
+esac
+
+# Finally, exit with error code 1 (failed)
+exit 1
