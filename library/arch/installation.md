@@ -205,14 +205,12 @@ pacman -S linux-firmware
 > NOTE `linux-firmware` is not required, highly recommended
 
 ### 3.6 Install GPU drivers
-GPU drivers in linux is annoying and involved to configure, see my other document in this repo `graphics_drivers.md` for more details if the following does not work for you.
-
+GPU drivers in linux is annoying and involved to configure. If section below does not work see [arch wiki for nvidia](https://wiki.archlinux.org/title/NVIDIA)
 #### 3.6.1 Find GPU
 Find gpu brand from the following
 ```bash
 lpci | grep -i vga
 ```
-> NOTE if you already know you have an nvidia card but it does not show up in this step, skip this and try info from `graphics_drivers.md`.
 
 #### 3.6.2 Install GPU driver
 If you have an INTEL card:
@@ -232,7 +230,6 @@ If you have an NVIDIA card:
 pacman -S nvidia nvidia-utils
 pacman -S nvidia-lts    # If you installed linux-lts
 ```
-> NOTE this will probably not be enough for everything to work, especially if you have an NVIDIA card(like me). See `graphics_drivers.md` document in this repo for more details.
 
 ### 3.7 Initialize ram disk
 #### 3.7.1 Edit mkinitcpio
