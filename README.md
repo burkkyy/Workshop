@@ -1,4 +1,3 @@
 # Calebs Workshop
 
-A collection of random programs
-
+A collection of random stuff
