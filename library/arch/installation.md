@@ -2,27 +2,24 @@
 I do not recommend using this document to learn how to install arch. This document is to quickly look up info for reinstalling arch. 
 This document assumes you want to install arch with an encrypted drive and lvm. Installing a GUI is NOT included. See `dwm.md` for installing and configuring dwm, otherwise your on your own(i.e go to the arch wiki).
 
-> NOTE some of the section numbering may be wrong, and reference documents may not exists yet.
+## 1.0 Setting up install
+### 1.1 Burn ISO to USB
+Download arch ISO from one of the [mirrors.](https://archlinux.org/download/)
 
-## 1.0 Setting up install env
-### 1.1 Download ISO
-You can download the arch ISO from one of the [mirrors.](https://archlinux.org/download/)
-
-### 1.2 Burn ISO to USB
 ```bash
 sudo dd bs=4M if=/path/to/arch.iso of=/path/to/usb status=progress oflag=sync
 ```
 Use `sudo fdisk -l` to find path to a usb device.
-> NOTE this assumes you already have a sutible usb flash drive plugged in.
+> NOTE: This assumes you already have a suitable usb flash drive plugged in.
 
-### 1.3 Boot off flash drive
+### 1.2 Boot off flash drive
 While booting off target system open boot menu to select usb.
 (`<ESC>`, `<F2>`, `<F10>` or `<F12>` to open boot menu)
 
-### 1.4 Connecting to Internet
+### 1.3 Connecting to Internet
 If you are already connected via eth, skip this step.
 
-### 1.4.1 Get interface
+#### 1.3.1 Get interface
 Run `ip a` to see all interfaces, then find your wifi interface.
 
 Ex.
@@ -39,23 +36,21 @@ Ex.
 
 In this example `wlan0` is the wifi interface.
 
-### 1.4.2 Connect via wifi
+#### 1.3.2 Connect via wifi
 Replace `i` with the name of your interface.
 
 ```bash
 iwctl station i get-networks
 iwctl --passphrase "*Network Password*" station i connect *Network Name* 
 ```
-> NOTE This method won't work after an arch install unless you install `iw`
+> NOTE: This method won't work after an arch install unless you install `iw`
 
 ## 2.0 Set up storage 
-**This step will wipe your disk**
-> NOTE This step creates LVM partitions
+This step will **wipe your disk**. This section assumes you want LVM partitions
 
 ### 2.1 Find block device to install onto
 Use `fdisk -l` or `lsblk` to find a block device to install arch on.
-
-NOTE `/dev/sda1` is most likely not a block device, but rather a partition of a block device `/dev/sda`.
+`/dev/sda1` is most likely not a block device, but rather a partition of a block device `/dev/sda`.
 
 ### 2.2 Partition the block device
 Replace `sdX` with your choose block device. This also might be `nvme0n1`.
@@ -100,7 +95,7 @@ mkfs.ext4 /dev/sdY
 
 If you dont want an encrypted drive, skip 3.4. 
 
-If you are not using LVM, go to (wiki)[https://wiki.archlinux.org/title/Installation_guide] for info.
+If you are not using LVM, go to [wiki](https://wiki.archlinux.org/title/Installation_guide) for info.
 
 ### 2.4 Setting up encrypted Partition (optional)
 Replace `sdX` with target partiton.
@@ -113,8 +108,7 @@ To open(unencrypt) disk:
 ```bash
 cryptsetup open --type luks /dev/sdX lvm
 ```
-> NOTE open the encrypted drive before the next step
-> NOTE opened drive will be in /dev/mapper/lvm
+> NOTE: **Open the encrypted drive before the next step**, opened drive will be in /dev/mapper/lvm
 
 ### 2.5 Configuring LVM
 ```bash
@@ -152,7 +146,7 @@ mkdir /mnt/home
 mount /dev/volgroup0/lv_home /mnt/home
 ```
 
-See (here)[https://wiki.archlinux.org/title/Install_Arch_Linux_on_LVM] for more on LVM.
+See [here](https://wiki.archlinux.org/title/Install_Arch_Linux_on_LVM) for more on LVM.
 
 ## 3.0 Configure current install
 This is the meat and potatos of this document, this section is where `arch` is installed 
@@ -171,7 +165,7 @@ genfstab -U -p /mnt >> /mnt/etc/fstab
 cat /mnt/etc/fstab  # check fstab file for correct mounts 
 ```
 
-### 3.3 Login to current arch install.
+### 3.3 Login to current arch install
 ```bash
 arch-chroot /mnt
 ```
@@ -250,7 +244,7 @@ Edit `/etc/mkinitcpio.conf`, make these changes:
 
 The HOOKS line might look different, doesnt matter just put `encrypt` and `lvm2` inbetween `block` and `filesystems`. You dont need `encrypt` if you didnt encrypt your partition.
 
-> NOTE the `-HOOKS` line is the line to take out, replace it with the `+HOOKS` line. Do not include `+`. 
+> NOTE: the `-HOOKS` line is the line to take out, replace it with the `+HOOKS` line. Do not include `+`. 
 
 #### 3.7.2 Generate initramfs
 ```bash
@@ -291,15 +285,14 @@ grub-install --target=x68_64-efi --bootloader-id=grub_uefi --recheck
 cp /usr/share/locale/en\@quot/LC_MESSAGES/grub.mo /boot/grub/locale/en.mo
 grub-mkconfig -o /boot/grub/grub.cfg
 ```
-
-> NOTE this won't work for non-uefi virtual machines
+> NOTE: This won't work for non-uefi systems
 
 ### 3.10 Finished?
 ```bash
 systemctl enable NetworkManager     # Only if you are using NetworkManager
-exit    # Exit out of the current install
-umount -a   # Unmount from live cd
+exit
+umount -a                           # Unmount from live cd
 reboot
 ```
-> NOTE you won't have wifi after install. See `networking.md` in this dir for more.
+If you do not have wifi after install, see `networking.md` in this dir for more.
 
