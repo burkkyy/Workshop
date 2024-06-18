@@ -1,6 +1,6 @@
 # Installing Arch
 I do not recommend using this document to learn how to install arch. This document is to quickly look up info for reinstalling arch. 
-This document assumes you want to install arch with an encrypted drive and lvm. Installing a GUI is NOT included. See `dwm.md` for installing and configuring dwm, otherwise your on your own(i.e go to the arch wiki).
+This document assumes you want to install arch with an encrypted drive and lvm. Installing a GUI is NOT included. See `dwm.md` for installing and configuring dwm, otherwise you're on your own (i.e go to the arch wiki).
 
 ## 1.0 Setting up install
 ### 1.1 Burn ISO to USB
