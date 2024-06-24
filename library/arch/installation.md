@@ -185,9 +185,9 @@ passwd user
 
 ### 3.4 Install some essential packages
 ```bash
-pacman -Syyuu   # 
+pacman -Syyuu
 pacman -S base-devel dosfstools grub efibootmgr lvm2 mtools
-pacman -S sudo openssh neovim    # these are optional, but might aswell install them
+pacman -S sudo openssh neovim # "optional"
 ```
 
 #### 3.4.1 Enable ssh
@@ -199,7 +199,7 @@ systemctl enable sshd
 Up until now we have not installed linux(the kernel).
 ```bash
 pacman -S linux linux-headers linux-lts linux-lts-headers
-pacman -S linux-firmware
+pacman -S linux-firmware # "optional"
 ```
 > NOTE linux lts(long-term-support) and the headers are not required, but recommended
 > NOTE `linux-firmware` is not required, highly recommended
