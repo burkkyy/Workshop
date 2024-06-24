@@ -43,7 +43,7 @@ Replace `i` with the name of your interface.
 iwctl station i get-networks
 iwctl --passphrase "*Network Password*" station i connect *Network Name* 
 ```
-> NOTE: This method won't work after an arch install unless you install `iw`
+> NOTE: This method won't work after an arch install unless you install `iwd`
 
 ## 2.0 Set up storage 
 This step will **wipe your disk**. This section assumes you want LVM partitions
