@@ -98,7 +98,7 @@ If you dont want an encrypted drive, skip 3.4.
 If you are not using LVM, go to [wiki](https://wiki.archlinux.org/title/Installation_guide) for info.
 
 ### 2.4 Setting up encrypted Partition (optional)
-Replace `sdX` with target partiton.
+Replace `sdX` with target partiton. This will most likey be the third partiton set up in 2.2
 
 ```bash
 cryptsetup luksFormat /dev/sdX
@@ -281,7 +281,7 @@ mount /dev/sdX /boot/EFI
 
 #### 3.9.3 Install and configure grub boot loader
 ```bash
-grub-install --target=x68_64-efi --bootloader-id=grub_uefi --recheck
+grub-install --target=x86_64-efi --bootloader-id=grub_uefi --recheck
 cp /usr/share/locale/en\@quot/LC_MESSAGES/grub.mo /boot/grub/locale/en.mo
 grub-mkconfig -o /boot/grub/grub.cfg
 ```
@@ -295,4 +295,4 @@ umount -a                           # Unmount from live cd
 reboot
 ```
 If you do not have wifi after install, see `networking.md` in this dir for more.
-
+See `post-install.md` for steps post install.
