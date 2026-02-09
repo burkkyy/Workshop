@@ -275,8 +275,8 @@ pacman -S libva-mesa-driver
 If you have an NVIDIA card:
 
 ```bash
-pacman -S nvidia nvidia-utils
-pacman -S nvidia-lts    # If you installed linux-lts
+pacman -S nvidia-open nvidia-utils
+pacman -S nvidia-open-lts    # If you installed linux-lts
 ```
 
 ### 3.7 Initialize ram disk
