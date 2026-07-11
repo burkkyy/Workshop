@@ -287,10 +287,10 @@ Edit `/etc/mkinitcpio.conf`, make these changes:
 
 ```
 -HOOKS=(base udev autodetect modconf kms keyboard keymap consolefont block filesystems fsck)
-+HOOKS=(base udev autodetect modconf kms keyboard keymap consolefont block encrypt lvm2 filesystems fsck)
++HOOKS=(base udev autodetect modconf kms keyboard keymap consolefont block sd-encrypt lvm2 filesystems fsck)
 ```
 
-The HOOKS line might look different, doesnt matter just put `encrypt` and `lvm2` inbetween `block` and `filesystems`. You dont need `encrypt` if you didnt encrypt your partition.
+The HOOKS line might look different, doesnt matter just put `sd-encrypt` and `lvm2` inbetween `block` and `filesystems`. You dont need `sd-encrypt` if you didnt sd-encrypt your partition.
 
 > NOTE: the `-HOOKS` line is the line to take out, replace it with the `+HOOKS` line. Do not include `+`.
 
@@ -322,10 +322,10 @@ Skip if you didn't set up disk encryption. Edit `/etc/default/grub`, make these 
 
 ```bash
 -GRUB_CMDLINE_LINUX_DEFAULT="loglevel=3"
-+GRUB_CMDLINE_LINUX_DEFAULT="loglevel=3 cryptdevice=/dev/sdX:volgroup0 quiet"
++GRUB_CMDLINE_LINUX_DEFAULT="loglevel=3 rd.luks.name=DISK_UUID=volgroup0 quiet"
 ```
 
-Replace `sdX` with the partition you encrypted.
+Replace `DISK_UUID` with the uuid of `/dev/sdX`, the partition you encrypted.
 
 > NOTE `quiet` is not required to add.
 
@@ -365,7 +365,7 @@ Edit `/etc/iwd/main.conf`
 EnableNetworkConfiguration=true
 ```
 
-#### Network manager:
+#### Network manager
 
 ```bash
 pacman -S NetworkManager
